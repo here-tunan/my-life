@@ -11,3 +11,4 @@ logs
 /ui/.idea
 
 README-myself.md
+/ui/package-lock.json
