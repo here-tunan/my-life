@@ -1,0 +1,13 @@
+/ui/node_modules/
+.idea
+
+# Logs
+logs
+*.log
+
+
+# Editor directories and files
+/ui/.vscode/*
+/ui/.idea
+
+README-myself.md
