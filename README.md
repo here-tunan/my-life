@@ -21,3 +21,90 @@
 
 ### 家庭收支统计（可以看到家庭内的其他成员的收支明细）
 ![image](https://github.com/here-tunan/my-life/assets/40956738/e3c28bef-d02a-474c-b9b1-da3c75a6dac4)
+
+
+## Mysql 建表语句
+```sql
+create table user
+(
+    id           bigint auto_increment
+        primary key,
+    account      varchar(20)  not null,
+    password     varchar(50)  not null,
+    name         varchar(255) null,
+    `desc`       varchar(255) null,
+    avatar       varchar(200) null comment '头像',
+    extra        varchar(255) null,
+    is_deleted   tinyint(1)   null,
+    gmt_create   datetime     null,
+    gmt_modified datetime     null
+);
+
+create table family
+(
+    id           bigint auto_increment comment '主键id'
+        primary key,
+    name         varchar(100) null comment '家庭名称',
+    `desc`       varchar(400) not null comment '家庭描述',
+    avatar       varchar(200) null comment '头像',
+    gmt_create   timestamp    null,
+    gmt_modified timestamp    null,
+    is_deleted   tinyint(1)   null
+)
+    comment '家庭表';
+
+
+create table family_member
+(
+    id           bigint auto_increment comment '自增id'
+        primary key,
+    family_id    bigint     null,
+    user_id      bigint     null,
+    is_creator   tinyint(1) null comment '是这个家庭的创建者么',
+    gmt_create   timestamp  null,
+    gmt_modified timestamp  null,
+    is_deleted   tinyint(1) null
+)
+    comment '家庭成员表';
+
+
+create table transaction
+(
+    id           bigint auto_increment
+        primary key,
+    amount       decimal(10, 2) null,
+    description  varchar(255)   null,
+    user_id      bigint         null,
+    type         int            null,
+    category     int            null,
+    account      int            null,
+    time         datetime       null,
+    is_deleted   tinyint(1)     null,
+    gmt_create   datetime       null,
+    gmt_modified datetime       null
+);
+
+create table transaction_account
+(
+    id           bigint auto_increment
+        primary key,
+    name         varchar(255) null,
+    `desc`       varchar(255) null,
+    is_deleted   tinyint(1)   null,
+    gmt_create   datetime     null,
+    gmt_modified datetime     null
+)
+    charset = utf8mb3;
+
+create table transaction_category
+(
+    id           bigint auto_increment
+        primary key,
+    name         varchar(255) charset utf8mb3 null,
+    type         int                          null,
+    `desc`       varchar(255) charset utf8mb3 null,
+    is_deleted   tinyint(1)                   null,
+    gmt_create   datetime                     null,
+    gmt_modified datetime                     null
+);
+```
