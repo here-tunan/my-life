@@ -2,10 +2,10 @@
   <div class="login-page">
     <el-card shadow="always" class="card-container">
       <el-row>
-        <el-col :span="12">
-          <img src="@/assets/img/hhhh.jpeg" alt="小麻最美丽" class="login-left-img"/>
+        <el-col :span="10">
+          <img src="@/assets/img/gaoda.jpg" alt="小麻最美丽" class="login-left-img"/>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="14">
           <div class="login-right-form">
             <div class="login-text">
               <h2>欢迎登录</h2>
@@ -81,9 +81,8 @@ const enterClick = () => {
 }
 
 .card-container {
-  width: 610px;
+  width: 600px;
   height: 270px;
-//background-image: url('@/assets/img/ma.jpeg');
   opacity: 0.9;
   animation: pulse 5s infinite;
   border-radius: 75px; /* 设置圆角 */
@@ -109,8 +108,9 @@ const enterClick = () => {
 }
 
 .login-left-img {
-  width: 90%;
-  border-radius: 56px;
+  width: 80%;
+  border-radius: 46px;
+  margin-left: 40px;
 }
 
 .login-right-form {
