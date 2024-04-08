@@ -108,3 +108,52 @@ create table transaction_category
     gmt_modified datetime                     null
 );
 ```
+
+## Mysql 基础数据
+```sql
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (1, '微信支付', '微信支付', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (2, '支付宝', '支付宝', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (3, '现金', '现金', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (4, '美团', '美团', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (5, '医保/保险', '医保/保险', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (6, '中国银行', '中国银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (7, '工商银行', '工商银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (8, '建设银行', '建设银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (9, '农业银行', '建设银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (10, '招商银行', '招商银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (11, '杭州银行', '杭州银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (12, '关爱通', '关爱通', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+insert into life.transaction_account (id, name, desc, is_deleted, gmt_create, gmt_modified) values (101, '其他', '其他', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
+
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (1, '饮食', 1, '平日里的饮食消费（粮油菜也算）', 0, '2023-09-13 15:05:37', '2023-09-13 15:05:40');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (2, '生活用品', 1, '购买一些生活用品', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (3, '保险医疗', 1, '用于保险、治病、买药等的支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (4, '运动健身', 1, '用于买运动器械装备、课程等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (5, '聚会娱乐', 1, '平日的聚会、旅游、购物，用于娱乐项目的支出等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (6, '成长教育', 1, '用于提升自我的一些消费，买书买课等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (7, '水电煤气费', 1, '水电煤气费', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (8, '话费通讯', 1, '流量、话费等充值', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (9, '电子产品', 1, '手机、耳机、手表、笔记本等电子产品购买', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (10, '房租', 1, '房租', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (11, '运输交通', 1, '寄快递、打车、公共交通', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (12, '人情往来', 1, '发红包、随礼、压岁钱等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (13, '孝敬父母', 1, '给家里买东西、给钱等支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (14, '工资收入', 2, '工资收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (15, '红包收入', 2, '收到的一些红包', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (16, '返现收入', 2, '购物的一些返现', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (17, '补贴收入', 2, '政府的补贴、失业金等的收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (101, '其他支出', 1, '其他支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+insert into life.transaction_category (id, name, type, desc, is_deleted, gmt_create, gmt_modified) values (102, '其他收入', 2, '其他收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
+
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:51:44', '2024-02-06 16:51:44');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:50:17', '2024-02-06 16:50:17');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:22:17', '2024-02-06 16:22:17');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:21:29', '2024-02-06 16:21:29');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 55.00, 'sheng sheng 生活！！！', 2, 2, 2, 3, '2024-02-18 00:00:00', 0, '2024-02-06 13:16:30', '2024-02-06 16:15:42');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 567.00, '测试', 2, 2, 2, 3, '2024-02-18 00:00:00', 1, '2024-02-06 13:16:30', '2024-02-06 13:16:53');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 86.00, '好好啊哈', 2, 2, 2, 3, '2024-02-18 00:00:00', 0, '2024-02-06 13:16:30', '2024-02-06 13:16:30');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 867.00, '电饭锅', 2, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:13:50');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 465.00, '官方_环境_有点好', 1, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:14:20');
+insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 234.00, 'fghj', 2, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:13:50');
+
+```
