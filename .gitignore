@@ -9,6 +9,7 @@ logs
 # Editor directories and files
 /ui/.vscode/*
 /ui/.idea
+/ui/dist/
 
 README-myself.md
 /ui/package-lock.json
