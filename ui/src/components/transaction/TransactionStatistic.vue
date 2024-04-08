@@ -252,7 +252,7 @@ onMounted(() => {
   // 时间初始化
   const now = new Date();
   yearSelect.value = now.getFullYear().toString()
-  monthSelect.value = now.getFullYear() + "-" + (now.getMonth() + 1)
+  monthSelect.value = now.getFullYear() + "-" + ((now.getMonth() + 1).toString().padStart(2, '0'));
 
   // 初始化
   transactionTypes.value = TRANSACTION_TYPES
