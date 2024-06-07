@@ -3,7 +3,7 @@
     <h1>均衡膳食</h1>
     <el-calendar v-model="value" @mouseenter="handleDateMouseEnter">
 
-      <template #date-cell="{ data }">
+      <template #date-cell>
         <el-icon style="border: 1px solid #ddd;border-radius: 5px;">
           <Plus/>
         </el-icon>
