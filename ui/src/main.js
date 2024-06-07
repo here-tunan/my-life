@@ -14,6 +14,7 @@ import router from './router'
 
 import './permission'
 
+
 const app = createApp(App)
 
 // 注册element的所有图标
