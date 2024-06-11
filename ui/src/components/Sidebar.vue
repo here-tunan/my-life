@@ -87,9 +87,9 @@ const items = [
         title: '均衡膳食',
       },
       {
-        index: '/exercise',
+        index: '/sport',
         icon: 'Football',
-        title: '运动健身',
+        title: '运动健康',
       },
       {
         index: '/uuuu',

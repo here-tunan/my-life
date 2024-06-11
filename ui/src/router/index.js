@@ -11,7 +11,9 @@ import Family from "@/views/family/Family.vue";
 import FamilyBill from "@/views/family/FamilyBill.vue";
 import User from "@/views/User.vue";
 import BalanceDiet from "@/components/health/BalanceDiet.vue";
-import Exercise from "@/views/health/Exercise.vue"
+import Sport from '../views/health/Sport.vue';
+import LegTrain from '../views/train/LegTrain.vue';
+import ChestTrain from '../views/train/ChestTrain.vue';
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -79,14 +81,6 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/exercise',
-                    name: '/exercise',
-                    component: Exercise,
-                    meta: {
-                        title: "运动健身"
-                    }
-                },
-                {
                     path: '/family',
                     name: 'family',
                     component: Family,
@@ -116,6 +110,30 @@ const router = createRouter({
                     component: BalanceDiet,
                     meta: {
                         title: '均衡膳食',
+                    }
+                },
+                {
+                    path: '/sport',
+                    name: 'sport',
+                    component: Sport,
+                    meta: {
+                        title: '运动健康',
+                    }
+                },
+                {
+                    path: '/leg-train',
+                    name: 'leg-train',
+                    component: LegTrain,
+                    meta: {
+                        title: '腿部训练',
+                    }
+                },
+                {
+                    path: '/chest-train',
+                    name: 'chest-train',
+                    component: ChestTrain,
+                    meta: {
+                        title: '胸部训练',
                     }
                 },
             ]
