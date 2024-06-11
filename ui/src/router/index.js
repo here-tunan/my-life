@@ -11,6 +11,7 @@ import Family from "@/views/family/Family.vue";
 import FamilyBill from "@/views/family/FamilyBill.vue";
 import User from "@/views/User.vue";
 import BalanceDiet from "@/components/health/BalanceDiet.vue";
+import Exercise from "@/views/health/Exercise.vue"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -75,6 +76,14 @@ const router = createRouter({
                     component: Weight,
                     meta: {
                         title: "体重管理"
+                    }
+                },
+                {
+                    path: '/exercise',
+                    name: '/exercise',
+                    component: Exercise,
+                    meta: {
+                        title: "运动健身"
                     }
                 },
                 {
