@@ -40,6 +40,15 @@ const dialogVisible = ref(false)
 const addItem = (data) => {
   console.log(data)
   dialogVisible.value = true
+
+  console.log("is today?" + isToday(data))
+}
+
+const isToday = (calendarData) => {
+  const today = new Date();
+  const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '-');
+  console.log(formattedDate);
+  return formattedDate === calendarData.day
 }
 
 </script>
