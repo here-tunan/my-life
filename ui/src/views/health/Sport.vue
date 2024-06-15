@@ -15,11 +15,33 @@
   </el-row>
   <el-dialog v-model="dialogVisible" title="新增训练内容" width="40%">
     <el-form :model="form" label-width="auto" style="max-width: 600px">
-      <el-form-item label="训练内容">
-        <el-input v-model="form.name"/>
+      <el-form-item label="日期" class="form-item-left-label">
+        <el-input v-model="form.date" placeholder="日期" readonly></el-input>
+      </el-form-item>
+
+      <el-form-item label="标签" class="form-item-left-label">
+        <el-select
+            v-model="form.tag"
+            placeholder="请选择标签"
+        >
+          <el-option
+              v-for="tag in tags"
+              :key="tag.value"
+              :label="tag.label"
+              :value="tag.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="时长（分钟）" class="form-item-left-label">
+        <el-input-number v-model="form.duration" :min="1" :max="1440"></el-input-number>
+      </el-form-item>
+
+      <el-form-item label="内容" class="form-item-left-label">
+        <el-input v-model="form.content" type="textarea" placeholder="请输入训练内容描述"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="dialogVisible = false">Create</el-button>
+        <el-button type="primary" @click="confirmAdd">Create</el-button>
         <el-button @click="dialogVisible = false">Cancel</el-button>
       </el-form-item>
     </el-form>
@@ -31,16 +53,48 @@ import {ref} from "vue";
 import {reactive} from 'vue'
 import {Plus} from "@element-plus/icons-vue";
 
+const getCurrentDateFormatted = () => {
+  const now = new Date();
+  return formatDateToYYYYMMDD(now);
+}
+
+const formatDateToYYYYMMDD = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}${month}${day}`;
+}
 
 const form = reactive({
-  name: '',
+  date: getCurrentDateFormatted(),
+  tag: '',
+  duration: 30,
+  content: ''
 })
+
 const dialogVisible = ref(false)
+const tags  = [
+  { value: 'run', label: '跑步' },
+  { value: 'swim', label: '游泳' },
+  { value: 'chest', label: '胸部' },
+  { value: 'leg', label: '腿部' },
+  { value: 'back', label: '背部' },
+  { value: 'shoulder', label: '肩部' },
+]
+
+const confirmAdd = () => {
+  if (form.content.trim() !== '') {
+    console.log('Form Data:', form);
+    dialogVisible.value = false;
+  } else {
+    alert("请选择一项训练内容");
+  }
+}
 
 const addItem = (data) => {
   console.log(data)
   dialogVisible.value = true
-
+  form.date = formatDateToYYYYMMDD(new Date(data.day));
   console.log("is today?" + isToday(data))
 }
 
@@ -54,6 +108,9 @@ const isToday = (calendarData) => {
 </script>
 
 <style scoped>
+.form-item-left-label {
+  text-align: left !important;
+}
 
 .exercise-day-calendar {
   display: flex;
