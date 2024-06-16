@@ -3,11 +3,16 @@
     <el-col :span="24">
       <el-calendar>
         <template #date-cell="{ data }">
-          <div class="exercise-day-calendar">
-            <el-icon v-if="data.isSelected" class="add-item-icon" @click="addItem(data)"><Plus/></el-icon>
+          <div class="day-calendar">
+            <el-icon v-if="data.isSelected" class="add-item-icon" @click="addItem(data)">
+              <Plus/>
+            </el-icon>
             <p class="day-show">
               {{ data.day.split("-").slice(2).join("") }}
             </p>
+          </div>
+          <div class="day-items">
+            <CalendarDayItems :day-items=exerciseItemsByEveryDay.get(data.day) />
           </div>
         </template>
       </el-calendar>
@@ -49,9 +54,10 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {reactive} from 'vue'
 import {Plus} from "@element-plus/icons-vue";
+import CalendarDayItems from "@/components/calendar/CalendarDayItems.vue";
 
 const getCurrentDateFormatted = () => {
   const now = new Date();
@@ -72,14 +78,37 @@ const form = reactive({
   content: ''
 })
 
+const exerciseLogs = ref([
+  {title: '篮球训练三小时', date: '2024-06-13'},
+  {title: '今天游泳了', date: '2024-06-16'},
+  {title: '羽毛球', date: '2024-06-16'},
+  {title: '健身 练腿日', date: '2024-06-16'},
+  {title: 'Happy Day', date: '2024-06-16'},
+  {title: 'nothing', date: '2024-06-16'},
+  {title: '特殊的日期展示', date: '2024-05-26'},
+])
+
+const exerciseItemsByEveryDay = computed(() => {
+  const groupedMap = new Map();
+  exerciseLogs.value.forEach(log => {
+    const date = log.date;
+    if (groupedMap.has(date)) {
+      groupedMap.get(date).push(log);
+    } else {
+      groupedMap.set(date, [log]);
+    }
+  });
+  return groupedMap;
+});
+
 const dialogVisible = ref(false)
-const tags  = [
-  { value: 'run', label: '跑步' },
-  { value: 'swim', label: '游泳' },
-  { value: 'chest', label: '胸部' },
-  { value: 'leg', label: '腿部' },
-  { value: 'back', label: '背部' },
-  { value: 'shoulder', label: '肩部' },
+const tags = [
+  {value: 'run', label: '跑步'},
+  {value: 'swim', label: '游泳'},
+  {value: 'chest', label: '胸部'},
+  {value: 'leg', label: '腿部'},
+  {value: 'back', label: '背部'},
+  {value: 'shoulder', label: '肩部'},
 ]
 
 const confirmAdd = () => {
@@ -105,6 +134,13 @@ const isToday = (calendarData) => {
   return formattedDate === calendarData.day
 }
 
+const formatDate = (calendarData) => {
+  const today = new Date();
+  const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '-');
+  console.log(formattedDate);
+  return formattedDate === calendarData.day
+}
+
 </script>
 
 <style scoped>
@@ -112,7 +148,7 @@ const isToday = (calendarData) => {
   text-align: left !important;
 }
 
-.exercise-day-calendar {
+.day-calendar {
   display: flex;
 }
 
@@ -120,7 +156,7 @@ const isToday = (calendarData) => {
   align-self: center;
   position: relative;
   /* 居中 */
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 .add-item-icon {
