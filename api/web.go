@@ -72,6 +72,7 @@ func Start() {
 	root.Mount("/user", UserMount())
 	root.Mount("/family", FamilyMount())
 	root.Mount("/oss", OssMount())
+	root.Mount("/exercise", ExerciseMount())
 
 	log.Fatal(app.Listen(":3001"))
 }
