@@ -1,27 +1,23 @@
 <template>
-  <el-row>
-    <el-col :span="24">
-      <el-calendar>
-        <template #date-cell="{ data }">
-          <div class="day-calendar">
-            <el-icon v-if="data.isSelected" class="add-item-icon" @click="addItem(data)">
-              <Plus/>
-            </el-icon>
-            <p class="day-show">
-              {{ data.day.split("-").slice(2).join("") }}
-            </p>
-          </div>
-          <div class="day-items">
-            <CalendarDayItems :day-items=exerciseItemsByEveryDay.get(data.day) />
-          </div>
-        </template>
-      </el-calendar>
-    </el-col>
-  </el-row>
+  <el-calendar>
+    <template #date-cell="{ data }">
+      <div class="day-calendar">
+        <el-icon v-if="data.isSelected" class="add-item-icon" @click="addItem(data)">
+          <Plus/>
+        </el-icon>
+        <p class="day-show">
+          {{ data.day.split("-").slice(2).join("") }}
+        </p>
+      </div>
+      <div class="day-items">
+        <CalendarDayItems :day-items=exerciseItemsByEveryDay.get(data.day) />
+      </div>
+    </template>
+  </el-calendar>
   <el-dialog v-model="dialogVisible" title="新增训练内容" width="40%">
     <el-form :model="form" label-width="auto" style="max-width: 600px">
       <el-form-item label="日期" class="form-item-left-label">
-        <el-input v-model="form.date" placeholder="日期" readonly></el-input>
+        <el-input v-model="form.date" placeholder="日期" disabled></el-input>
       </el-form-item>
 
       <el-form-item label="标签" class="form-item-left-label">
@@ -39,7 +35,7 @@
       </el-form-item>
 
       <el-form-item label="时长（分钟）" class="form-item-left-label">
-        <el-input-number v-model="form.duration" :min="1" :max="1440"></el-input-number>
+        <el-input-number v-model="form.duration" :min="1" :max="1440" :step="10"></el-input-number>
       </el-form-item>
 
       <el-form-item label="内容" class="form-item-left-label">
@@ -61,14 +57,14 @@ import CalendarDayItems from "@/components/calendar/CalendarDayItems.vue";
 
 const getCurrentDateFormatted = () => {
   const now = new Date();
-  return formatDateToYYYYMMDD(now);
+  return formatStrDate(now);
 }
 
-const formatDateToYYYYMMDD = (date) => {
+const formatStrDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}${month}${day}`;
+  return `${year}-${month}-${day}`;
 }
 
 const form = reactive({
@@ -120,21 +116,13 @@ const confirmAdd = () => {
   }
 }
 
-const addItem = (data) => {
-  console.log(data)
+// 点击新增item的按钮
+const addItem = (selectDate) => {
   dialogVisible.value = true
-  form.date = formatDateToYYYYMMDD(new Date(data.day));
-  console.log("is today?" + isToday(data))
+  form.date = formatStrDate(new Date(selectDate.day));
 }
 
 const isToday = (calendarData) => {
-  const today = new Date();
-  const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '-');
-  console.log(formattedDate);
-  return formattedDate === calendarData.day
-}
-
-const formatDate = (calendarData) => {
   const today = new Date();
   const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '-');
   console.log(formattedDate);
