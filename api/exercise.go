@@ -15,8 +15,8 @@ func ExerciseMount() *fiber.App {
 		if err != nil {
 			return err
 		}
-		//res := service.PutExercise(ctx.Locals("userId").(int64), theExercise)
-		res := service.PutExercise(2, theExercise)
+		res := service.PutExercise(ctx.Locals("userId").(int64), theExercise)
+		//res := service.PutExercise(2, theExercise)
 		return ctx.JSON(&fiber.Map{
 			"success": true,
 			"data":    res,
