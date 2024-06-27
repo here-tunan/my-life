@@ -54,6 +54,8 @@ import {computed, ref} from "vue";
 import {reactive} from 'vue'
 import {Plus} from "@element-plus/icons-vue";
 import CalendarDayItems from "@/components/calendar/CalendarDayItems.vue";
+import {createExercise} from "@/api/excercise/exercise";
+import {ElMessage} from "element-plus";
 
 const getCurrentDateFormatted = () => {
   const now = new Date();
@@ -108,11 +110,31 @@ const tags = [
 ]
 
 const confirmAdd = () => {
-  if (form.content.trim() !== '') {
+  if (form.tag.trim() !== '') {
     console.log('Form Data:', form);
     dialogVisible.value = false;
+
+    const param = {
+      type: form.tag,
+      description: form.content,
+      duration: form.duration,
+      date: form.date,
+    }
+
+    createExercise(param).then(res =>{
+      if (res.success){
+        console.log('锻炼记录创建成功');
+        alert('添加成功！')
+        form.tag = '';
+        form.duration = 30;
+        form.content = '';
+      }else {
+        console.error('请求过程中发生错误:', error);
+        alert('添加失败');
+      }
+    })
   } else {
-    alert("请选择一项训练内容");
+    alert("请选择一项训练标签");
   }
 }
 
