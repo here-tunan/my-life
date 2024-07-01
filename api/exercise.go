@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gofiber/fiber/v2"
 	"go-my-life/internal/domain/entity/exercise"
+	"go-my-life/internal/domain/repository/exercisedb"
 	service "go-my-life/internal/service/exercise"
 )
 
@@ -23,5 +24,18 @@ func ExerciseMount() *fiber.App {
 		})
 	})
 
+	app.Put("list", func(ctx *fiber.Ctx) error {
+		queryParam := &exercisedb.ExerciseQuery{}
+		err := ctx.BodyParser(queryParam)
+		if err != nil {
+			return err
+		}
+		res := service.ListExerciseLogs(ctx.Locals("userId").(int64), *queryParam)
+		//res := service.PutExercise(2, theExercise)
+		return ctx.JSON(&fiber.Map{
+			"success": true,
+			"data":    res,
+		})
+	})
 	return app
 }

@@ -2,6 +2,7 @@ package exercise
 
 import (
 	"go-my-life/internal/domain/entity/exercise"
+	"go-my-life/internal/domain/repository/exercisedb"
 )
 
 func PutExercise(userId int64, exercise *exercise.Log) error {
@@ -11,4 +12,9 @@ func PutExercise(userId int64, exercise *exercise.Log) error {
 	} else {
 		return exercise.Update()
 	}
+}
+
+func ListExerciseLogs(userId int64, param exercisedb.ExerciseQuery) []exercisedb.ExerciseLog {
+	param.UserId = userId
+	return exercisedb.Query(param)
 }

@@ -4,6 +4,8 @@ import (
 	"errors"
 	"go-my-life/internal/infrastructure"
 	"go-my-life/pkg/model"
+	"log"
+	"time"
 )
 
 type ExerciseLog struct {
@@ -12,7 +14,7 @@ type ExerciseLog struct {
 	// 用户ID
 	UserId int64 `json:"userId"`
 	// 运动类型
-	Type string `json:"type"`
+	Tag string `json:"tag"`
 	// 描述
 	Description string `json:"description"`
 	// 运动时长
@@ -25,6 +27,12 @@ type ExerciseLog struct {
 	GmtCreate model.LocalTime `json:"gmtCreate" xorm:"updated"`
 	// 系统更新时间
 	GmtModified model.LocalTime `json:"gmtModified" xorm:"updated"`
+}
+
+type ExerciseQuery struct {
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	UserId    int64  `json:"userId"`
 }
 
 func (record *ExerciseLog) Insert() error {
@@ -54,4 +62,26 @@ func (record *ExerciseLog) Delete() error {
 		return err
 	}
 	return err
+}
+
+func Query(param ExerciseQuery) []ExerciseLog {
+	session := infrastructure.Mysql.Where("is_deleted = 0")
+	if param.StartDate != "" {
+		startDate, _ := time.Parse("2006-01-02", param.StartDate)
+		session = session.And("date >= ?", startDate)
+	}
+	if param.EndDate != "" {
+		EndDate, _ := time.Parse("2006-01-02", param.EndDate)
+		EndDate = EndDate.Add(24 * time.Hour)
+		// 记得加一天
+		session = session.And("date < ?", EndDate)
+	}
+
+	var logs []ExerciseLog
+	err := session.Find(&logs)
+	if err != nil {
+		log.Println(err)
+		return logs
+	}
+	return logs
 }
