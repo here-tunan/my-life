@@ -1,6 +1,6 @@
 <template>
   <!-- 日历 -->
-  <el-calendar>
+  <el-calendar ref="calendar">
     <template #date-cell="{ data }">
       <div class="day-calendar">
         <el-icon v-if="data.isSelected" class="add-item-icon" @click="addItem(data)">
@@ -21,11 +21,28 @@
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {reactive} from 'vue'
 import {Plus} from "@element-plus/icons-vue";
-import CalendarDayItems from "@/components/calendar/CalendarDayItems.vue";
+import CalendarDayItems from "@/components/calendar/DayItems.vue";
 import ExerciseFormDialog from "@/components/health/ExerciseFormDialog.vue";
+
+// 当前的日期对应的日历数据
+const exerciseLogs = ref([
+  {title: '打打太极拳', date: '2024-07-01'},
+  {title: '都逗猫遛遛狗', date: '2024-06-30'},
+  {title: '篮球训练三小时', date: '2024-07-13'},
+  {title: '游泳训练三小时', tag: '腿部', date: '2024-07-18', duration: 200},
+  {title: '啦啦啦1小时', date: '2024-07-18'},
+  {title: '爬山老和山', date: '2024-07-18'},
+  {title: '今天游泳了', date: '2024-07-16'},
+  {title: '羽毛球', date: '2024-07-16'},
+  {title: '健身 练腿日', date: '2024-07-16'},
+  {title: 'Happy Day', date: '2024-07-16'},
+  {title: 'nothing', date: '2024-07-16'},
+  {title: '特殊的日期展示', date: '2024-06-26'},
+])
+
 
 const formatStrDate = (date) => {
   const year = date.getFullYear();
@@ -52,20 +69,7 @@ const addItem = (selectDate) => {
   console.log(newItem.date);
 }
 
-const exerciseLogs = ref([
-  {title: '打打太极拳', date: '2024-07-01'},
-  {title: '篮球训练三小时', date: '2024-07-13'},
-  {title: '游泳训练三小时', tag: '腿部', date: '2024-07-18', duration: 200},
-  {title: '啦啦啦1小时', date: '2024-07-18'},
-  {title: '爬山老和山', date: '2024-07-18'},
-  {title: '今天游泳了', date: '2024-07-16'},
-  {title: '羽毛球', date: '2024-07-16'},
-  {title: '健身 练腿日', date: '2024-07-16'},
-  {title: 'Happy Day', date: '2024-07-16'},
-  {title: 'nothing', date: '2024-07-16'},
-  {title: '特殊的日期展示', date: '2024-06-26'},
-])
-
+// 获取所有数据的日期分组
 const exerciseItemsByEveryDay = computed(() => {
   const groupedMap = new Map();
   exerciseLogs.value.forEach(log => {
@@ -78,9 +82,6 @@ const exerciseItemsByEveryDay = computed(() => {
   });
   return groupedMap;
 });
-
-
-
 
 </script>
 
