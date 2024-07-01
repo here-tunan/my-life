@@ -2,13 +2,23 @@
   <div class="day-items">
     <div>
       <div v-for="item in showItems">
-        <p>{{ item.title }}</p>
+        <DayItem :item="item"/>
       </div>
     </div>
 
-    <div class="more-items-icon" v-if="showDropdownArrow" @click="toggleDropdown">
+    <div class="more-items-icon" v-if="showDropdownArrow" @click="clickMoreItems">
       {{ moreItemsNum }} more items
     </div>
+
+    <el-dialog
+        class="more-items-dialog"
+        v-model="dialogVisible"
+        width="300"
+    >
+      <div v-for="item in props.dayItems">
+        <DayItem :item="item"/>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -16,12 +26,15 @@
 
 // 父组件传来的参数
 import {computed, ref} from "vue";
+import DayItem from "@/components/calendar/DayItem.vue";
 
 const props = defineProps({
   //2024-04-12 格式
   day: String,
   dayItems: []
 });
+
+const dialogVisible = ref(false)
 
 // 限制最多展示三个item
 const maxShowNum = 3;
@@ -58,9 +71,11 @@ const showItems = computed(() => {
 })
 
 
-const toggleDropdown = () => {
+const clickMoreItems = () => {
   // 弹出多个事项
   console.log("展示下拉")
+  dialogVisible.value = true
+
 }
 
 </script>
@@ -86,4 +101,11 @@ const toggleDropdown = () => {
   color: #918f8f;
 }
 
+</style>
+
+<style>
+.more-items-dialog {
+  border-radius: 20px;
+  background-color: rgb(228, 228, 248);
+}
 </style>
