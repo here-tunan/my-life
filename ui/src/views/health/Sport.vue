@@ -77,13 +77,17 @@ const form = reactive({
 })
 
 const exerciseLogs = ref([
-  {title: '篮球训练三小时', date: '2024-06-13'},
-  {title: '今天游泳了', date: '2024-06-16'},
-  {title: '羽毛球', date: '2024-06-16'},
-  {title: '健身 练腿日', date: '2024-06-16'},
-  {title: 'Happy Day', date: '2024-06-16'},
-  {title: 'nothing', date: '2024-06-16'},
-  {title: '特殊的日期展示', date: '2024-05-26'},
+  {title: '打打太极拳', date: '2024-07-01'},
+  {title: '篮球训练三小时', date: '2024-07-13'},
+  {title: '游泳训练三小时', date: '2024-07-18'},
+  {title: '啦啦啦1小时', date: '2024-07-18'},
+  {title: '爬山老和山', date: '2024-07-18'},
+  {title: '今天游泳了', date: '2024-07-16'},
+  {title: '羽毛球', date: '2024-07-16'},
+  {title: '健身 练腿日', date: '2024-07-16'},
+  {title: 'Happy Day', date: '2024-07-16'},
+  {title: 'nothing', date: '2024-07-16'},
+  {title: '特殊的日期展示', date: '2024-06-26'},
 ])
 
 const exerciseItemsByEveryDay = computed(() => {
@@ -142,13 +146,6 @@ const confirmAdd = () => {
 const addItem = (selectDate) => {
   dialogVisible.value = true
   form.date = formatStrDate(new Date(selectDate.day));
-}
-
-const isToday = (calendarData) => {
-  const today = new Date();
-  const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '-');
-  console.log(formattedDate);
-  return formattedDate === calendarData.day
 }
 
 </script>

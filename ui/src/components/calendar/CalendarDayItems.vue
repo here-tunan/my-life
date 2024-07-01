@@ -32,29 +32,29 @@ const itemsNum = computed(() => {
 
 // 是否展示下拉，大于三个时展示
 const showDropdownArrow = computed(() => {
-      return itemsNum > maxShowNum
+      return itemsNum.value > maxShowNum
     }
 )
 
 // 需要展示的数量
 const showItemsNum = computed(() => {
-  if (itemsNum > 0) {
-    if (itemsNum <= maxShowNum) {
-      return itemsNum
+  if (itemsNum.value > 0) {
+    if (itemsNum.value <= maxShowNum) {
+      return itemsNum.value
     } else {
-      return itemsNum - maxShowNum - 1
+      return maxShowNum - 1
     }
   }
   return 0;
 })
 
 const moreItemsNum = computed(() => {
-      return itemsNum - maxShowNum
+      return itemsNum.value - showItemsNum.value
     }
 )
 
 const showItems = computed(() => {
-  return showItemsNum > 0 ? props.dayItems.slice(0, showItemsNum) : []
+  return showItemsNum.value > 0 ? props.dayItems.slice(0, showItemsNum.value) : []
 })
 
 
