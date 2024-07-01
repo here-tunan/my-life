@@ -48,6 +48,9 @@ const props = defineProps({
   },
   date: {
     type: String,
+  },
+  item: {
+    type: {},
   }
 })
 
