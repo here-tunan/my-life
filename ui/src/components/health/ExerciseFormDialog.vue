@@ -1,9 +1,9 @@
 <template>
 
-  <el-dialog v-model="props.showDialog"  @close="closeDialog" title="新增训练内容" width="650px">
+  <el-dialog v-model="props.showDialog" @close="closeDialog" title="新增训练内容" width="650px">
     <el-form :model="form" label-width="auto" style="max-width: 600px">
       <el-form-item label="日期" class="form-item-left-label">
-        <el-input v-model="formDate" placeholder="日期" disabled></el-input>
+        <el-input v-model="form.date" placeholder="日期" disabled></el-input>
       </el-form-item>
 
       <el-form-item label="标签" class="form-item-left-label">
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import {computed, reactive} from "vue";
+import {reactive} from "vue";
 import {createExercise} from "@/api/excercise/exercise";
 import {ElMessage} from "element-plus";
 
@@ -46,24 +46,26 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  date: {
-    type: String,
-  },
   item: {
     type: {},
+    default: {
+      id: '',
+      title: '',
+      date: '',
+      tag: '',
+      duration: '10',
+    }
   }
 })
 
+// prop 被用于传入初始值；而子组件想在之后将其作为一个局部数据属性
 const form = reactive({
-  tag: '',
-  duration: 30,
-  content: ''
+  id: props.item.id,
+  content: props.item.title,
+  date: props.item.date,
+  tag: props.item.tag,
+  duration: props.item.duration,
 })
-
-// 使用 computed 属性计算 form.date
-const formDate = computed(() => {
-  return props.date;
-});
 
 const tags = [
   {value: 'run', label: '跑步'},
@@ -78,6 +80,13 @@ const emit = defineEmits(['updateDialog']);
 
 const closeDialog = () => {
   emit('updateDialog', false);
+
+  // form 中的内容恢复
+  form.id = props.item.id;
+  form.content = props.item.title;
+  form.date = props.item.date;
+  form.tag = props.item.tag;
+  form.duration = props.item.duration;
 }
 
 const confirmAdd = () => {
@@ -89,15 +98,12 @@ const confirmAdd = () => {
       type: form.tag,
       description: form.content,
       duration: form.duration,
-      date: formDate,
+      date: form.date,
     }
 
     createExercise(param).then(res => {
       if (res.success) {
         ElMessage.success('添加成功！')
-        form.tag = '';
-        form.duration = 30;
-        form.content = '';
       } else {
         console.error('请求过程中发生错误:', res);
         ElMessage.error('添加失败');

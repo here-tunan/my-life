@@ -17,7 +17,7 @@
   </el-calendar>
 
   <!-- 弹窗 -->
-  <ExerciseFormDialog :show-dialog="dialogVisible" :date="dialogDate" @updateDialog="updateDialogVisible"/>
+  <ExerciseFormDialog :show-dialog="dialogVisible" :item="newItem" @updateDialog="updateDialogVisible"/>
 </template>
 
 <script setup>
@@ -26,12 +26,6 @@ import {reactive} from 'vue'
 import {Plus} from "@element-plus/icons-vue";
 import CalendarDayItems from "@/components/calendar/CalendarDayItems.vue";
 import ExerciseFormDialog from "@/components/health/ExerciseFormDialog.vue";
-
-
-const getCurrentDateFormatted = () => {
-  const now = new Date();
-  return formatStrDate(now);
-}
 
 const formatStrDate = (date) => {
   const year = date.getFullYear();
@@ -42,22 +36,26 @@ const formatStrDate = (date) => {
 
 // 弹出框信息
 const dialogVisible = ref(false)
-const dialogDate = ref('')
+const newItem = reactive({
+  title: '',
+  date: '',
+  duration: '30',
+})
 const updateDialogVisible = isShow => {
   dialogVisible.value = isShow
 }
 
-const form = reactive({
-  date: getCurrentDateFormatted(),
-  tag: '',
-  duration: 30,
-  content: ''
-})
+// 点击新增item的按钮
+const addItem = (selectDate) => {
+  dialogVisible.value = true
+  newItem.date = formatStrDate(new Date(selectDate.day));
+  console.log(newItem.date);
+}
 
 const exerciseLogs = ref([
   {title: '打打太极拳', date: '2024-07-01'},
   {title: '篮球训练三小时', date: '2024-07-13'},
-  {title: '游泳训练三小时', date: '2024-07-18'},
+  {title: '游泳训练三小时', tag: '腿部', date: '2024-07-18', duration: 200},
   {title: '啦啦啦1小时', date: '2024-07-18'},
   {title: '爬山老和山', date: '2024-07-18'},
   {title: '今天游泳了', date: '2024-07-16'},
@@ -82,11 +80,7 @@ const exerciseItemsByEveryDay = computed(() => {
 });
 
 
-// 点击新增item的按钮
-const addItem = (selectDate) => {
-  dialogVisible.value = true
-  dialogDate.value = formatStrDate(new Date(selectDate.day));
-}
+
 
 </script>
 

@@ -31,7 +31,7 @@ import DayItem from "@/components/calendar/DayItem.vue";
 const props = defineProps({
   //2024-04-12 格式
   day: String,
-  dayItems: []
+  dayItems: Array
 });
 
 const dialogVisible = ref(false)

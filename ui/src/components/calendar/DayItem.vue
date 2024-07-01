@@ -3,7 +3,7 @@
     <p>{{ props.item.title }}</p>
   </div>
 
-  <ExerciseFormDialog :show-dialog="dialogVisible" :date="dialogDate" item="props.item" @updateDialog="updateDialogVisible" />
+  <ExerciseFormDialog :show-dialog="dialogVisible" :date="dialogDate" :item="props.item" @updateDialog="updateDialogVisible" />
 </template>
 
 <script setup>
@@ -13,6 +13,8 @@ import ExerciseFormDialog from "@/components/health/ExerciseFormDialog.vue";
 const props = defineProps({
   item: {}
 });
+
+// console.log(props.item)
 
 // 弹出框信息
 const dialogVisible = ref(false)
