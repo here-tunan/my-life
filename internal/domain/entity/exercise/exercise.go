@@ -11,7 +11,7 @@ type Log struct {
 	// 用户ID
 	UserId int64 `json:"userId"`
 	// 运动类型
-	Type string `json:"type"`
+	Tag string `json:"tag"`
 	// 描述
 	Description string `json:"description"`
 	// 运动时长
@@ -25,7 +25,7 @@ func (exercise *Log) Create() error {
 		Date:        exercise.Date,
 		Description: exercise.Description,
 		UserId:      exercise.UserId,
-		Type:        exercise.Type,
+		Tag:         exercise.Tag,
 		Duration:    exercise.Duration,
 	}
 	return record.Insert()
@@ -36,7 +36,7 @@ func (exercise *Log) Update() error {
 		Duration:    exercise.Duration,
 		Description: exercise.Description,
 		UserId:      exercise.UserId,
-		Type:        exercise.Type,
+		Tag:         exercise.Tag,
 		Date:        exercise.Date,
 	}
 	return record.Update()
