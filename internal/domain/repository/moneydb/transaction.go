@@ -1,10 +1,14 @@
 package moneydb
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"go-my-life/internal/infrastructure"
 	"go-my-life/pkg/model"
+	"strconv"
+	"xorm.io/xorm"
 )
 
 type Transaction struct {
@@ -53,13 +57,13 @@ func (record *Transaction) Insert() error {
 	}
 
 	// 插入es
-	/*transactionIndex := TransactionIndex{
+	transactionIndex := TransactionIndex{
 		Id:          record.Id,
 		Description: record.Description,
 		Type:        record.Type,
 		Category:    record.Category,
 	}
-	_, err = infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(record.Id, 10)).Request(transactionIndex).Do(context.Background())*/
+	_, err = infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(record.Id, 10)).Request(transactionIndex).Do(context.Background())
 	return err
 }
 
@@ -68,14 +72,14 @@ func (record *Transaction) Update() error {
 	if err != nil {
 		return err
 	}
-	/*transactionIndex := TransactionIndex{
+	transactionIndex := TransactionIndex{
 		Id:          record.Id,
 		Description: record.Description,
 		Type:        record.Type,
 		Category:    record.Category,
 	}
 	// 更新es
-	_, err = infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(record.Id, 10)).Request(transactionIndex).Do(context.Background())*/
+	_, err = infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(record.Id, 10)).Request(transactionIndex).Do(context.Background())
 	return nil
 }
 
@@ -89,17 +93,11 @@ func (record *Transaction) Delete() error {
 	}
 
 	// es 根据id删除
-	//matchQuery := `{"query": {"match": {"id": "` + strconv.FormatInt(record.Id, 10) + `"}}}`
-	//request := esapi.DeleteByQueryRequest{
-	//	Index: []string{EsIndex},
-	//	Body:  strings.NewReader(matchQuery),
-	//}
-	//_, err = request.Do(context.Background(), infrastructure.EsClient)
-	/*request := esapi.DeleteRequest{
+	request := esapi.DeleteRequest{
 		Index:      EsIndex,
 		DocumentID: strconv.FormatInt(record.Id, 10),
 	}
-	_, err = request.Do(context.Background(), infrastructure.EsClient)*/
+	_, err = request.Do(context.Background(), infrastructure.EsClient)
 	return err
 }
 
@@ -107,7 +105,12 @@ func BatchPutTransaction(transactions []*Transaction) error {
 	// 事务管理
 	session := infrastructure.Mysql.NewSession()
 
-	defer session.Close()
+	defer func(session *xorm.Session) {
+		err := session.Close()
+		if err != nil {
+			println("BatchPutTransaction err:", err)
+		}
+	}(session)
 	_ = session.Begin()
 
 	var err error
@@ -132,18 +135,18 @@ func BatchPutTransaction(transactions []*Transaction) error {
 	}
 
 	// 插入数据库成功后进行es的插入
-	//for _, transaction := range transactions {
-	//	// 插入es
-	//	//transactionIndex := TransactionIndex{
-	//	//	Id:          transaction.Id,
-	//	//	Description: transaction.Description,
-	//	//	Type:        transaction.Type,
-	//	//	Category:    transaction.Category,
-	//	//}
-	//	// _, err := infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(transaction.Id, 10)).Request(transactionIndex).Do(context.Background())
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
+	for _, transaction := range transactions {
+		// 插入es
+		transactionIndex := TransactionIndex{
+			Id:          transaction.Id,
+			Description: transaction.Description,
+			Type:        transaction.Type,
+			Category:    transaction.Category,
+		}
+		_, err := infrastructure.EsClient.Index(EsIndex).Id(strconv.FormatInt(transaction.Id, 10)).Request(transactionIndex).Do(context.Background())
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

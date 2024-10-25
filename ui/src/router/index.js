@@ -4,13 +4,13 @@ import Dashboard from "@/views/Dashboard.vue";
 import TransactionRecord from "../views/money/TransactionRecord.vue";
 import TransactionAccount from "@/views/money/TransactionAccount.vue";
 import TransactionCategory from "@/views/money/TransactionCategory.vue";
-import Weight from "@/views/health/Weight.vue";
+import MetricRecord from "@/views/health/MetricRecord.vue";
 import Login from "@/views/login/Login.vue"
 import MyBill from "@/views/money/MyBill.vue";
 import Family from "@/views/family/Family.vue";
 import FamilyBill from "@/views/family/FamilyBill.vue";
 import User from "@/views/User.vue";
-import BalanceDiet from "@/components/health/BalanceDiet.vue";
+import HealthBoard from "@/views/health/Board.vue";
 import Sport from '../views/health/Sport.vue';
 import LegTrain from '../views/train/LegTrain.vue';
 import ChestTrain from '../views/train/ChestTrain.vue';
@@ -73,11 +73,11 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/weight',
-                    name: '/weight',
-                    component: Weight,
+                    path: '/health',
+                    name: '/health',
+                    component: MetricRecord,
                     meta: {
-                        title: "体重管理"
+                        title: "指标记录"
                     }
                 },
                 {
@@ -105,11 +105,11 @@ const router = createRouter({
                     }
                 },
                 {
-                    path: '/balance-diet',
-                    name: 'balance-diet',
-                    component: BalanceDiet,
+                    path: '/health-board',
+                    name: 'health-board',
+                    component: HealthBoard,
                     meta: {
-                        title: '均衡膳食',
+                        title: '健康看板',
                     }
                 },
                 {

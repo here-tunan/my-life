@@ -82,9 +82,14 @@ const items = [
     index: '2',
     subs: [
       {
-        index: '/balance-diet',
+        index: '/health',
+        icon: 'Chicken',
+        title: '指标记录',
+      },
+      {
+        index: '/health-board',
         icon: 'Apple',
-        title: '均衡膳食',
+        title: '健康看板',
       },
       {
         index: '/sport',
@@ -95,11 +100,6 @@ const items = [
         index: '/uuuu',
         icon: 'MoonNight',
         title: '睡眠健康',
-      },
-      {
-        index: '/weight',
-        icon: 'Chicken',
-        title: '体重管理',
       },
     ]
   },
