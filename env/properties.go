@@ -8,6 +8,8 @@ import (
 )
 
 type Properties struct {
+	Port string `json:"port"`
+
 	Mysql struct {
 		Host     string `json:"host"`
 		Port     int    `json:"port"`

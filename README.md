@@ -22,138 +22,41 @@
 ### 家庭收支统计（可以看到家庭内的其他成员的收支明细）
 ![image](https://github.com/here-tunan/my-life/assets/40956738/e3c28bef-d02a-474c-b9b1-da3c75a6dac4)
 
+## 运行
+### 前提
+需要开启 redis、mysql、ElasticSearch服务。
 
-## Mysql 建表语句
-```sql
-create table user
-(
-    id           bigint auto_increment
-        primary key,
-    account      varchar(20)  not null,
-    password     varchar(50)  not null,
-    name         varchar(255) null,
-    `desc`       varchar(255) null,
-    avatar       varchar(200) null comment '头像',
-    extra        varchar(255) null,
-    is_deleted   tinyint(1)   null,
-    gmt_create   datetime     null,
-    gmt_modified datetime     null
-);
-
-create table family
-(
-    id           bigint auto_increment comment '主键id'
-        primary key,
-    name         varchar(100) null comment '家庭名称',
-    `desc`       varchar(400) not null comment '家庭描述',
-    avatar       varchar(200) null comment '头像',
-    gmt_create   timestamp    null,
-    gmt_modified timestamp    null,
-    is_deleted   tinyint(1)   null
-)
-    comment '家庭表';
-
-
-create table family_member
-(
-    id           bigint auto_increment comment '自增id'
-        primary key,
-    family_id    bigint     null,
-    user_id      bigint     null,
-    is_creator   tinyint(1) null comment '是这个家庭的创建者么',
-    gmt_create   timestamp  null,
-    gmt_modified timestamp  null,
-    is_deleted   tinyint(1) null
-)
-    comment '家庭成员表';
-
-
-create table transaction
-(
-    id           bigint auto_increment
-        primary key,
-    amount       decimal(10, 2) null,
-    description  varchar(255)   null,
-    user_id      bigint         null,
-    type         int            null,
-    category     int            null,
-    account      int            null,
-    time         datetime       null,
-    is_deleted   tinyint(1)     null,
-    gmt_create   datetime       null,
-    gmt_modified datetime       null
-);
-
-create table transaction_account
-(
-    id           bigint auto_increment
-        primary key,
-    name         varchar(255) null,
-    `desc`       varchar(255) null,
-    is_deleted   tinyint(1)   null,
-    gmt_create   datetime     null,
-    gmt_modified datetime     null
-)
-    charset = utf8mb3;
-
-create table transaction_category
-(
-    id           bigint auto_increment
-        primary key,
-    name         varchar(255) charset utf8mb3 null,
-    type         int                          null,
-    `desc`       varchar(255) charset utf8mb3 null,
-    is_deleted   tinyint(1)                   null,
-    gmt_create   datetime                     null,
-    gmt_modified datetime                     null
-);
+### 本地运行
+#### 服务端
+设置好dev.yaml中的配置，启动go项目即可。
+#### 客户端
+```shell
+cd ui
+npm install
+npm run dev
 ```
 
-## Mysql 基础数据
-```sql
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (1, '微信支付', '微信支付', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (2, '支付宝', '支付宝', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (3, '现金', '现金', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (4, '美团', '美团', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (5, '医保/保险', '医保/保险', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (6, '中国银行', '中国银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (7, '工商银行', '工商银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (8, '建设银行', '建设银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (9, '农业银行', '建设银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (10, '招商银行', '招商银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (11, '杭州银行', '杭州银行', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (12, '关爱通', '关爱通', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-insert into life.transaction_account (id, name, `desc`, is_deleted, gmt_create, gmt_modified) values (101, '其他', '其他', 0, '2023-09-18 14:55:52', '2023-09-18 14:55:52');
-
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (1, '饮食', 1, '平日里的饮食消费（粮油菜也算）', 0, '2023-09-13 15:05:37', '2023-09-13 15:05:40');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (2, '生活用品', 1, '购买一些生活用品', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (3, '保险医疗', 1, '用于保险、治病、买药等的支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (4, '运动健身', 1, '用于买运动器械装备、课程等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (5, '聚会娱乐', 1, '平日的聚会、旅游、购物，用于娱乐项目的支出等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (6, '成长教育', 1, '用于提升自我的一些消费，买书买课等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (7, '水电煤气费', 1, '水电煤气费', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (8, '话费通讯', 1, '流量、话费等充值', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (9, '电子产品', 1, '手机、耳机、手表、笔记本等电子产品购买', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (10, '房租', 1, '房租', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (11, '运输交通', 1, '寄快递、打车、公共交通', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (12, '人情往来', 1, '发红包、随礼、压岁钱等', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (13, '孝敬父母', 1, '给家里买东西、给钱等支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (14, '工资收入', 2, '工资收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (15, '红包收入', 2, '收到的一些红包', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (16, '返现收入', 2, '购物的一些返现', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (17, '补贴收入', 2, '政府的补贴、失业金等的收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (101, '其他支出', 1, '其他支出', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-insert into life.transaction_category (id, name, type, `desc`, is_deleted, gmt_create, gmt_modified) values (102, '其他收入', 2, '其他收入', 0, '2023-09-18 16:32:55', '2023-09-18 16:33:02');
-
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:51:44', '2024-02-06 16:51:44');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:50:17', '2024-02-06 16:50:17');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:22:17', '2024-02-06 16:22:17');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 123.00, '1231', 2, 2, 2, 1, '2024-02-01 00:00:00', 0, '2024-02-06 16:21:29', '2024-02-06 16:21:29');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 55.00, 'sheng sheng 生活！！！', 2, 2, 2, 3, '2024-02-18 00:00:00', 0, '2024-02-06 13:16:30', '2024-02-06 16:15:42');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 567.00, '测试', 2, 2, 2, 3, '2024-02-18 00:00:00', 1, '2024-02-06 13:16:30', '2024-02-06 13:16:53');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 86.00, '好好啊哈', 2, 2, 2, 3, '2024-02-18 00:00:00', 0, '2024-02-06 13:16:30', '2024-02-06 13:16:30');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 867.00, '电饭锅', 2, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:13:50');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 465.00, '官方_环境_有点好', 1, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:14:20');
-insert into life.transaction ( amount, description, user_id, type, category, account, time, is_deleted, gmt_create, gmt_modified) values ( 234.00, 'fghj', 2, 2, 3, 1, '2024-02-08 00:00:00', 0, '2024-02-06 13:13:50', '2024-02-06 13:13:50');
-
+### 服务器Linux运行
+#### 服务端
+在带有go环境的机器上进行编译打包上传到服务器上，
+```shell
+CGO_ENABLED=0  GOOS=linux  GOARCH=amd64  go build -o go-my-life main.go
 ```
+或者直接使用仓库中的可执行文件。
+
+在可执行文件的同级/env目录下配置prod.yaml文件，然后配置好环境变量：
+```shell
+export GO_MY_LIFE_ENV=prod
+```
+
+启动后台程序
+```shell
+nohup ./go-my-life &
+```
+
+#### 客户端
+通过vue生成的dist静态文件部署。 创建/ui/.env.production环境配置文件，修改对应的服务端地址。在带有npm的环境中执行命令生成dist，上传到服务器的位置。
+```shell
+npm run build
+```
+通过nginx做好转发即可。

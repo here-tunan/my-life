@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"go-my-life/env"
 	"go-my-life/internal/domain/repository/userdb"
 	"go-my-life/internal/infrastructure"
 	"log"
@@ -73,7 +74,7 @@ func Start() {
 	root.Mount("/family", FamilyMount())
 	root.Mount("/oss", OssMount())
 
-	log.Fatal(app.Listen(":3001"))
+	log.Fatal(app.Listen(":" + env.Prop.Port))
 }
 
 func isNotNeedAuth(api string) bool {
