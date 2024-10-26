@@ -36,6 +36,7 @@ type Properties struct {
 		AccessKey string `json:"accessKey" yaml:"accessKey"`
 		Host      string `json:"host"`
 		Dir       string `json:"dir"`
+		Bucket    string `json:"bucket"`
 	} `json:"aliOss" yaml:"aliOss"`
 }
 

@@ -11,3 +11,9 @@ redis:
 elasticSearch:
   host: http://127.0.0.1
   port: 9200
+aliOss:
+  accessId: xxx
+  accessKey: xxx
+  host: https://xxx.oss-cn-hangzhou.aliyuncs.com
+  dir: /user-dirs
+  bucket: xxx

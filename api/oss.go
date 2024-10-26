@@ -29,7 +29,7 @@ func OssMount() *fiber.App {
 		policy := Policy{
 			Expiration: tokenExpire,
 			Conditions: []any{
-				map[string]string{"bucket": "your-bucket"},
+				map[string]string{"bucket": env.Prop.AliOss.Bucket},
 				[]any{"content-length-range", 0, 1048576000},
 				[]string{"eq", "$success_action_status", "200"},
 				//[]string{"starts-with", "$key", "user/eric/"},
