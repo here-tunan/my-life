@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"go-my-life/env"
 	"time"
 )
 
@@ -40,7 +41,7 @@ func OssMount() *fiber.App {
 		policyBytes, _ := json.Marshal(policy)
 		policyText := base64.StdEncoding.EncodeToString(policyBytes)
 
-		accessKey := "your key" // 你的AccessKey（secret）
+		accessKey := env.Prop.AliOss.AccessKey // 你的AccessKey（secret）
 		key := []byte(accessKey)
 		// 设置key（）
 		hmacBytes := hmac.New(sha1.New, key)
@@ -50,12 +51,12 @@ func OssMount() *fiber.App {
 		fmt.Println("Signature:", signature)
 
 		oss := fiber.Map{
-			"accessId":  "your accessId",
-			"host":      "your host",
+			"accessId":  env.Prop.AliOss.AccessId,
+			"host":      env.Prop.AliOss.Host,
 			"policy":    policyText,
 			"signature": signature,
 			"expire":    expiredEnd,
-			"dir":       "your-dirs/",
+			"dir":       env.Prop.AliOss.Dir,
 		}
 
 		return ctx.JSON(&fiber.Map{

@@ -30,6 +30,13 @@ type Properties struct {
 		Password    string `json:"password"`
 		Fingerprint string `json:"fingerprint"`
 	} `json:"elasticSearch" yaml:"elasticSearch"`
+
+	AliOss struct {
+		AccessId  string `json:"accessId" yaml:"accessId"`
+		AccessKey string `json:"accessKey" yaml:"accessKey"`
+		Host      string `json:"host"`
+		Dir       string `json:"dir"`
+	} `json:"aliOss" yaml:"aliOss"`
 }
 
 var Prop *Properties

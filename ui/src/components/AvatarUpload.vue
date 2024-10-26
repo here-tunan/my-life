@@ -94,7 +94,7 @@ const saveAvatar = () => {
         upload(res.data.host, fileFormData).then((result) => {
           // console.log(result)
           if (result.status === 200) {
-            let newAvatar = "https://yaodao-images.oss-cn-hangzhou.aliyuncs.com/my-vue-lif/" + filename
+            let newAvatar = res.data.host + "/my-vue-lif/" + filename
             emit('newAvatar', newAvatar);
           }
           showDialog.value= false
