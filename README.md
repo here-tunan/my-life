@@ -26,6 +26,27 @@
 ### 前提
 需要开启 redis、mysql、ElasticSearch服务。
 
+ES 索引构建
+```shell
+PUT /transaction_index 
+{
+  "settings": {
+    "number_of_shards": 1
+  },
+  "aliases":{
+    "transaction": {}
+  },
+  "mappings": {
+    "properties": {
+      "id": {"type": "keyword"},
+      "description": {"type": "text"},
+      "category": {"type": "keyword"},
+      "type": {"type": "keyword"}
+    }
+  }
+}
+```
+
 ### 本地运行
 #### 服务端
 设置好dev.yaml中的配置，启动go项目即可。
